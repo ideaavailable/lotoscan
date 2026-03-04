@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOTO番号ジェネレーター | LOTO6 & LOTO7</title>
+    <meta name="description" content="日本のLOTO6・LOTO7の当選番号組み合わせを自動生成するツール">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Orbitron:wght@700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="bg-particles" id="particles"></div>
+
+    <header class="header">
+        <div class="logo">
+            <span class="logo-icon">🎰</span>
+            <h1>LOTO<span class="logo-scan">SCAN</span></h1>
+        </div>
+        <p class="subtitle">幸運の番号を見つけよう</p>
+    </header>
+
+    <main class="main-content">
+        <!-- ★ Weekly Recommendation Section ★ -->
+        <section class="recommendation-section" id="recommendation-section">
+            <div class="rec-header">
+                <span class="rec-icon">🌟</span>
+                <h2 class="rec-title">今週のオススメ番号</h2>
+                <span class="rec-badge" id="rec-week-badge"></span>
+            </div>
+            <p class="rec-subtitle">数学的・確率的・トレンド分析から導出（過去の当選番号は除外済み）</p>
+
+            <div class="rec-cards" id="rec-cards">
+                <!-- LOTO6 Recommendation -->
+                <div class="rec-card rec-loto6" id="rec-card-loto6">
+                    <div class="rec-card-header">
+                        <span class="rec-card-label">LOTO6</span>
+                        <span class="rec-card-tag">RECOMMENDED</span>
+                    </div>
+                    <div class="rec-numbers" id="rec-numbers-loto6">
+                        <!-- Numbers rendered by JS -->
+                    </div>
+                    <div class="rec-analysis" id="rec-analysis-loto6">
+                        <!-- Analysis tags rendered by JS -->
+                    </div>
+                </div>
+
+                <!-- LOTO7 Recommendation -->
+                <div class="rec-card rec-loto7" id="rec-card-loto7">
+                    <div class="rec-card-header">
+                        <span class="rec-card-label">LOTO7</span>
+                        <span class="rec-card-tag">RECOMMENDED</span>
+                    </div>
+                    <div class="rec-numbers" id="rec-numbers-loto7">
+                        <!-- Numbers rendered by JS -->
+                    </div>
+                    <div class="rec-analysis" id="rec-analysis-loto7">
+                        <!-- Analysis tags rendered by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analysis Detail -->
+            <div class="rec-details" id="rec-details">
+                <!-- Analysis detail rendered by JS -->
+            </div>
+        </section>
+
+        <!-- Divider -->
+        <div class="section-divider">
+            <span class="divider-label">ランダム番号ジェネレーター</span>
+        </div>
+
+        <!-- Game Type Selector -->
+        <div class="game-selector">
+            <button class="game-tab active" data-game="loto6" id="tab-loto6">
+                <span class="tab-label">LOTO6</span>
+                <span class="tab-desc">1〜43から6個</span>
+            </button>
+            <button class="game-tab" data-game="loto7" id="tab-loto7">
+                <span class="tab-label">LOTO7</span>
+                <span class="tab-desc">1〜37から7個</span>
+            </button>
+        </div>
+
+        <!-- Sets Count Selector -->
+        <div class="sets-selector">
+            <label class="sets-label">生成セット数</label>
+            <div class="sets-buttons">
+                <button class="set-btn active" data-sets="1">1</button>
+                <button class="set-btn" data-sets="3">3</button>
+                <button class="set-btn" data-sets="5">5</button>
+                <button class="set-btn" data-sets="10">10</button>
+            </div>
+        </div>
+
+        <!-- Generate Button -->
+        <button class="generate-btn" id="generate-btn">
+            <span class="btn-text">番号を生成</span>
+            <span class="btn-icon">⚡</span>
+        </button>
+
+        <!-- Results Area -->
+        <div class="results-area" id="results-area">
+            <!-- Generated sets will appear here -->
+        </div>
+
+        <!-- Info Section -->
+        <div class="info-section">
+            <div class="info-card">
+                <h3>📋 LOTO6 ルール</h3>
+                <ul>
+                    <li>1〜43の中から<strong>6個</strong>の数字を選択</li>
+                    <li>1等: 6個すべて一致</li>
+                    <li>抽せん: 毎週月・木曜日</li>
+                </ul>
+            </div>
+            <div class="info-card">
+                <h3>📋 LOTO7 ルール</h3>
+                <ul>
+                    <li>1〜37の中から<strong>7個</strong>の数字を選択</li>
+                    <li>1等: 7個すべて一致</li>
+                    <li>抽せん: 毎週金曜日</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>※ このツールは番号をランダムに生成するものです。当選を保証するものではありません。</p>
+        <p class="copyright">© 2026 LOTOSCAN</p>
+    </footer>
+
+    <script src="historical_data.js"></script>
+    <script src="recommendation.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
