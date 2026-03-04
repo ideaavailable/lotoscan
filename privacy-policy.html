@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>プライバシーポリシー | LOTOSCAN</title>
+    <meta name="description" content="LOTOSCANのプライバシーポリシー・免責事項・お問い合わせ先について">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Orbitron:wght@700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="bg-particles" id="particles"></div>
+
+    <header class="header">
+        <div class="logo">
+            <span class="logo-icon">🎰</span>
+            <h1>LOTO<span class="logo-scan">SCAN</span></h1>
+        </div>
+        <p class="subtitle">プライバシーポリシー</p>
+    </header>
+
+    <main class="main-content policy-content">
+
+        <div class="policy-card">
+            <h2 class="policy-heading">📜 プライバシーポリシー</h2>
+            <p class="policy-update">最終更新日: 2026年3月4日</p>
+            <p class="policy-text">
+                LOTOSCAN（以下「当サイト」）は、利用者の個人情報の保護に努めます。
+                本プライバシーポリシーでは、当サイトにおける個人情報の取り扱いについて説明します。
+            </p>
+        </div>
+
+        <div class="policy-card">
+            <h2 class="policy-heading">📢 広告配信について</h2>
+            <p class="policy-text">
+                当サイトは、第三者配信の広告サービスとして
+                <strong>A8.net</strong>（株式会社ファンコミュニケーションズ）を含む
+                アフィリエイトプログラムを利用しています。
+            </p>
+            <p class="policy-text">
+                これらのサービスでは、ユーザーの興味に応じた広告を表示するために、
+                Cookie（クッキー）を使用する場合があります。
+                Cookie を通じて収集される情報には個人を特定する情報は含まれません。
+            </p>
+            <p class="policy-text">
+                ※ 当サイトはアフィリエイトプログラムによる収益を得ています。
+            </p>
+        </div>
+
+        <div class="policy-card">
+            <h2 class="policy-heading">🍪 Cookie（クッキー）について</h2>
+            <p class="policy-text">
+                当サイトでは、広告配信やアクセス解析のために Cookie を使用する場合があります。
+                Cookie はブラウザの設定により無効化することが可能です。
+                ただし、Cookie を無効にした場合、当サイトの一部機能が正しく動作しないことがあります。
+            </p>
+        </div>
+
+        <div class="policy-card" id="disclaimer">
+            <h2 class="policy-heading">⚠️ 免責事項</h2>
+            <ul class="policy-list">
+                <li>当サイトが提供するLOTO番号の生成・推薦機能は、数学的・統計的分析に基づくものであり、
+                    <strong>当選を保証するものではありません。</strong>
+                </li>
+                <li>宝くじの購入はご自身の判断と責任で行ってください。</li>
+                <li>当サイトの情報によって生じた損害について、当サイト運営者は一切の責任を負いません。</li>
+                <li>当サイトに掲載されている情報の正確性には万全を期していますが、
+                    内容を保証するものではありません。</li>
+                <li>当サイトからリンクやバナーなどによって他のサイトに移動された場合、
+                    移動先サイトで提供される情報・サービス等について、当サイトは一切の責任を負いません。</li>
+            </ul>
+        </div>
+
+        <div class="policy-card">
+            <h2 class="policy-heading">©️ 著作権・知的財産権</h2>
+            <p class="policy-text">
+                当サイトに掲載されているコンテンツ（文章・画像・デザイン・プログラム等）の著作権は、
+                当サイト運営者に帰属します。無断での複製・転載・改変は禁止します。
+            </p>
+        </div>
+
+        <div class="policy-card">
+            <h2 class="policy-heading">✉️ お問い合わせ</h2>
+            <p class="policy-text">
+                当サイトに関するお問い合わせは、以下のメールアドレスまでご連絡ください。
+            </p>
+            <p class="policy-contact">
+                📧 <a href="mailto:bwsn0te1016@gmail.com">こちらから</a>
+            </p>
+            <p class="policy-note">※ お返事には数日かかる可能性もありますので、予めご了承ください。</p>
+        </div>
+
+        <div class="policy-back">
+            <a href="index.html" class="back-link">← トップページに戻る</a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p class="copyright">© 2026 LOTOSCAN</p>
+    </footer>
+
+    <script>
+        // Particle animation for policy page
+        const particlesContainer = document.getElementById('particles');
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            const size = Math.random() * 4 + 2;
+            const colors = ['#fbbf24', '#60a5fa', '#a78bfa', '#22d3ee', '#f472b6'];
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+            particle.style.animationDuration = (Math.random() * 10 + 8) + 's';
+            particle.style.animationDelay = (Math.random() * 5) + 's';
+            particlesContainer.appendChild(particle);
+        }
+        for (let i = 0; i < 30; i++) createParticle();
+    </script>
+</body>
+
+</html>
