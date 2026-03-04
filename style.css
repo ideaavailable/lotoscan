@@ -935,6 +935,77 @@ body {
   border-radius: var(--radius-full);
 }
 
+/* --- Ad Banner Container --- */
+.ad-banner {
+  margin: 28px 0;
+  padding: 20px 16px;
+  background: linear-gradient(145deg, rgba(251, 191, 36, 0.04), rgba(139, 92, 246, 0.04));
+  border: 1px solid rgba(251, 191, 36, 0.12);
+  border-radius: var(--radius-lg);
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-base);
+}
+
+.ad-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient-hero);
+  opacity: 0.6;
+}
+
+.ad-banner:hover {
+  border-color: rgba(251, 191, 36, 0.25);
+  box-shadow: 0 0 24px rgba(251, 191, 36, 0.08);
+}
+
+.ad-banner-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.ad-banner-label {
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.ad-banner-link {
+  display: inline-block;
+  transition: all var(--transition-base);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  line-height: 0;
+}
+
+.ad-banner-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(251, 191, 36, 0.15);
+}
+
+.ad-banner-img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius-sm);
+}
+
+.ad-banner-footer {
+  margin: 16px auto;
+  max-width: 520px;
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
 /* --- Footer Navigation --- */
 .footer-nav {
   display: flex;
