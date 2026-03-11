@@ -95,6 +95,35 @@
             </button>
         </div>
 
+        <!-- Mode Selector -->
+        <div class="mode-selector" id="mode-selector">
+            <button class="mode-tab active" data-mode="random" id="mode-random">
+                <span class="mode-icon">🎲</span>
+                <span class="mode-label">フルランダム</span>
+                <span class="mode-desc">すべて自動生成</span>
+            </button>
+            <button class="mode-tab" data-mode="pick" id="mode-pick">
+                <span class="mode-icon">✋</span>
+                <span class="mode-label">自分で選ぶ</span>
+                <span class="mode-desc">一部を指定＋残りランダム</span>
+            </button>
+        </div>
+
+        <!-- Number Picker (hidden by default) -->
+        <div class="number-picker" id="number-picker" style="display: none;">
+            <div class="picker-header">
+                <span class="picker-title">番号を選択してください</span>
+                <span class="picker-status" id="picker-status">0 / 6 個選択中</span>
+            </div>
+            <p class="picker-hint" id="picker-hint">好きな番号をタップして選択（最大6個まで）。残りはランダムで補完されます。</p>
+            <div class="picker-grid" id="picker-grid">
+                <!-- Number buttons rendered by JS -->
+            </div>
+            <button class="picker-clear-btn" id="picker-clear-btn">
+                <span>🗑️</span> 選択をクリア
+            </button>
+        </div>
+
         <!-- Sets Count Selector -->
         <div class="sets-selector">
             <label class="sets-label">生成セット数</label>

@@ -14,12 +14,20 @@
   // --- State ---
   let currentGame = 'loto6';
   let currentSets = 1;
+  let currentMode = 'random'; // 'random' or 'pick'
+  let selectedNumbers = new Set();
 
   // --- DOM Elements ---
   const gameTabs = document.querySelectorAll('.game-tab');
   const setBtns = document.querySelectorAll('.set-btn');
   const generateBtn = document.getElementById('generate-btn');
   const resultsArea = document.getElementById('results-area');
+  const modeTabs = document.querySelectorAll('.mode-tab');
+  const numberPicker = document.getElementById('number-picker');
+  const pickerGrid = document.getElementById('picker-grid');
+  const pickerStatus = document.getElementById('picker-status');
+  const pickerHint = document.getElementById('picker-hint');
+  const pickerClearBtn = document.getElementById('picker-clear-btn');
 
   // --- Initialize Particles ---
   function createParticles() {
@@ -49,11 +57,23 @@
     return Math.floor(Math.random() * max) + 1;
   }
 
-  // --- Generate one set of numbers ---
+  // --- Generate one set of numbers (full random) ---
   function generateNumbers(max, pick) {
     const nums = new Set();
     while (nums.size < pick) {
       nums.add(secureRandom(max));
+    }
+    return Array.from(nums).sort((a, b) => a - b);
+  }
+
+  // --- Generate hybrid numbers (fixed + random fill) ---
+  function generateHybridNumbers(max, pick, fixedNumbers) {
+    const nums = new Set(fixedNumbers);
+    while (nums.size < pick) {
+      const n = secureRandom(max);
+      if (!nums.has(n)) {
+        nums.add(n);
+      }
     }
     return Array.from(nums).sort((a, b) => a - b);
   }
@@ -99,12 +119,101 @@
     });
   }
 
+  // --- Number Picker Grid ---
+  function renderPickerGrid() {
+    const game = GAMES[currentGame];
+    pickerGrid.innerHTML = '';
+    selectedNumbers.clear();
+
+    for (let i = 1; i <= game.max; i++) {
+      const btn = document.createElement('button');
+      btn.className = 'picker-num';
+      btn.textContent = String(i).padStart(2, '0');
+      btn.dataset.num = i;
+      btn.addEventListener('click', () => toggleNumber(i, btn));
+      pickerGrid.appendChild(btn);
+    }
+    updatePickerStatus();
+  }
+
+  function toggleNumber(num, btn) {
+    const game = GAMES[currentGame];
+
+    if (selectedNumbers.has(num)) {
+      // Deselect
+      selectedNumbers.delete(num);
+      btn.classList.remove('selected');
+    } else {
+      // Check limit
+      if (selectedNumbers.size >= game.pick) {
+        // Shake the status badge to indicate limit reached
+        pickerStatus.style.animation = 'none';
+        void pickerStatus.offsetWidth; // force reflow
+        pickerStatus.style.animation = 'shake 0.4s ease';
+        return;
+      }
+      selectedNumbers.add(num);
+      btn.classList.add('selected');
+    }
+    updatePickerStatus();
+  }
+
+  function updatePickerStatus() {
+    const game = GAMES[currentGame];
+    const count = selectedNumbers.size;
+    const remaining = game.pick - count;
+
+    pickerStatus.textContent = `${count} / ${game.pick} 個選択中`;
+    pickerStatus.classList.toggle('full', count >= game.pick);
+
+    if (count === 0) {
+      pickerHint.textContent = `好きな番号をタップして選択（最大${game.pick}個まで）。残りはランダムで補完されます。`;
+    } else if (count >= game.pick) {
+      pickerHint.textContent = `✨ ${game.pick}個すべて選択済み！この番号で生成します。`;
+    } else {
+      pickerHint.textContent = `残り ${remaining} 個をランダムで補完します。`;
+    }
+
+    // Update disabled state for unselected buttons when at limit
+    const buttons = pickerGrid.querySelectorAll('.picker-num');
+    buttons.forEach(b => {
+      const n = parseInt(b.dataset.num, 10);
+      if (count >= game.pick && !selectedNumbers.has(n)) {
+        b.classList.add('disabled');
+      } else {
+        b.classList.remove('disabled');
+      }
+    });
+  }
+
+  // --- Event: Mode Tabs ---
+  modeTabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      modeTabs.forEach((t) => t.classList.remove('active'));
+      tab.classList.add('active');
+      currentMode = tab.dataset.mode;
+
+      if (currentMode === 'pick') {
+        numberPicker.style.display = 'block';
+        renderPickerGrid();
+      } else {
+        numberPicker.style.display = 'none';
+        selectedNumbers.clear();
+      }
+    });
+  });
+
   // --- Event: Game Tab ---
   gameTabs.forEach((tab) => {
     tab.addEventListener('click', () => {
       gameTabs.forEach((t) => t.classList.remove('active'));
       tab.classList.add('active');
       currentGame = tab.dataset.game;
+
+      // Refresh the picker grid when switching game types
+      if (currentMode === 'pick') {
+        renderPickerGrid();
+      }
     });
   });
 
@@ -117,13 +226,32 @@
     });
   });
 
+  // --- Event: Clear Selection ---
+  pickerClearBtn.addEventListener('click', () => {
+    selectedNumbers.clear();
+    const buttons = pickerGrid.querySelectorAll('.picker-num');
+    buttons.forEach(b => b.classList.remove('selected', 'disabled'));
+    updatePickerStatus();
+  });
+
   // --- Event: Generate ---
   generateBtn.addEventListener('click', () => {
     const game = GAMES[currentGame];
     const sets = [];
-    for (let i = 0; i < currentSets; i++) {
-      sets.push(generateNumbers(game.max, game.pick));
+
+    if (currentMode === 'pick' && selectedNumbers.size > 0) {
+      // Hybrid mode: fixed + random
+      const fixed = Array.from(selectedNumbers);
+      for (let i = 0; i < currentSets; i++) {
+        sets.push(generateHybridNumbers(game.max, game.pick, fixed));
+      }
+    } else {
+      // Full random mode
+      for (let i = 0; i < currentSets; i++) {
+        sets.push(generateNumbers(game.max, game.pick));
+      }
     }
+
     renderResults(sets, currentGame);
 
     // Pulse button
